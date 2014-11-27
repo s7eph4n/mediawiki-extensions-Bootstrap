@@ -14,7 +14,7 @@
 /**
  * The main file of the Bootstrap extension
  *
- * @copyright (C) 2013, Stephan Gambke
+ * @copyright (C) 2013 - 2014, Stephan Gambke
  * @license       http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License, version 3 (or later)
  *
  * This file is part of the MediaWiki extension Bootstrap.
@@ -49,7 +49,7 @@ call_user_func( function () {
 	/**
 	 * The extension version
 	 */
-	define( 'BS_VERSION', '1.0.2-alpha' );
+	define( 'BS_VERSION', '1.1.1-dev' );
 
 	// register the extension
 	$GLOBALS[ 'wgExtensionCredits' ][ 'other' ][ ] = array(
@@ -59,6 +59,7 @@ call_user_func( function () {
 		'url'            => 'https://www.mediawiki.org/wiki/Extension:Bootstrap',
 		'descriptionmsg' => 'bootstrap-desc',
 		'version'        => BS_VERSION,
+		'license-name'   => 'GPLv3+',
 	);
 
 	// register message files
@@ -77,6 +78,7 @@ call_user_func( function () {
 		$configuration = array();
 		$configuration[ 'localBasePath' ] = str_replace( DIRECTORY_SEPARATOR . 'extensions' . DIRECTORY_SEPARATOR . 'Bootstrap', '/vendor/twitter/bootstrap', __DIR__ );
 		$configuration[ 'remoteBasePath' ] = str_replace( $GLOBALS[ 'IP' ], $GLOBALS[ 'wgScriptPath' ], $configuration[ 'localBasePath' ] );
+		$configuration[ 'IP' ] = $GLOBALS[ 'IP' ];
 
 		$setupAfterCache = new \Bootstrap\Hooks\SetupAfterCache( $configuration );
 		$setupAfterCache->process();
@@ -89,6 +91,10 @@ call_user_func( function () {
 		'styles'         => array(),
 		'variables'      => array(),
 		'dependencies'   => array(),
+		'cachetriggers'   => array(
+			'LocalSettings.php' => null,
+			'composer.lock'     => null,
+		),
 	);
 
 	$GLOBALS[ 'wgResourceModules' ][ 'ext.bootstrap.scripts' ] = array(
